@@ -14,3 +14,7 @@ router.get("/", (req, res) => {
 });
 
 module.exports = router;
+
+// add a class update a a class and delete a class
+// for instructor
+// 4

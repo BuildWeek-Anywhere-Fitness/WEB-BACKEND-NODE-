@@ -13,7 +13,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use("/api/users", usersRouter);
-server.use("/api/users", classRouter);
+server.use("/api/classes", classRouter);
 
 server.get("/", (req, res) => {
   res.json({ message: "up up and BUILD WEEK!!!" });
