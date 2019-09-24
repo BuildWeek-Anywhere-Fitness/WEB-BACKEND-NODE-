@@ -5,16 +5,36 @@ const jwt = require("jsonwebtoken");
 const secret = require("../config/secrets.js");
 const Users = require("./usersModel.js");
 
+// router.get("/", (req, res) => {
+//   Users.find()
+//     .then(users => {
+//       res.json(users);
+//     })
+//     .catch(err => res.send(err));
+// });
+
+// get all users
+
 router.get("/", (req, res) => {
   Users.find()
-    .then(users => {
-      res.json(users);
+    .then(response => {
+      response.map(newClass => {
+        if (newClass.instructor === 0) {
+          newClass.instructor = false;
+        } else {
+          newClass.instructor = true;
+        }
+        return newClass;
+      });
+      res.status(200).json(response);
     })
-    .catch(err => res.send(err));
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
+// register user
 router.post("/register", (req, res) => {
-  // implement registration
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 10);
   user.password = hash;
@@ -28,8 +48,8 @@ router.post("/register", (req, res) => {
     });
 });
 
+// login user
 router.post("/login", (req, res) => {
-  // implement login
   let { username, password } = req.body;
 
   Users.findBy({ username })
@@ -44,6 +64,45 @@ router.post("/login", (req, res) => {
     })
     .catch(error => {
       res.status(500).json(error);
+    });
+});
+
+//update user
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  Users.findById(id)
+    .then(classres => {
+      if (classres) {
+        Classes.update(changes, id).then(updatedClasses => {
+          res.json(updatedClasses);
+        });
+      } else {
+        res.status(404).json({ message: "Could not find class with given id" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to update class" });
+    });
+});
+
+// delete user
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Users.remove(id)
+    .then(deleted => {
+      if (deleted) {
+        res.json({ removed: deleted });
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find Classes with given id" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to delete Classes" });
     });
 });
 

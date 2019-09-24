@@ -1,20 +1,104 @@
 const router = require("express").Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
-const secret = require("../config/secrets.js");
-const Users = require("../users/usersModel.js");
+const restricted = require("../auth/restricted.js");
+
+const Classes = require("./classesModel.js");
+
+// get all classes
 
 router.get("/", (req, res) => {
-  Users.find()
-    .then(users => {
-      res.json(users);
+  Classes.find()
+    .then(response => {
+      response.map(newClass => {
+        if (newClass.instructor === 0) {
+          newClass.instructor = false;
+        } else {
+          newClass.instructor = true;
+        }
+        return newClass;
+      });
+      res.status(200).json(response);
     })
-    .catch(err => res.send(err));
+    .catch(err => {
+      res.status(500).json(err);
+    });
 });
 
-module.exports = router;
+// get classes by id
 
-// add a class update a a class and delete a class
-// for instructor
-// 4
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Classes.findById(id)
+    .then(classes => {
+      if (classes) {
+        res.json(classes);
+      } else {
+        res.status(404).json({ message: "could not find class with that id" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "failed ot get classes" });
+    });
+});
+
+// instructor add
+
+router.post("/", (req, res) => {
+  const classData = req.body;
+
+  Classes.add(classData)
+    .then(resClass => {
+      res.status(201).json(resClass);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to create new class" });
+    });
+});
+
+// instructor change
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  Classes.findById(id)
+    .then(classres => {
+      if (classres) {
+        Classes.update(changes, id).then(updatedClasses => {
+          res.json(updatedClasses);
+        });
+      } else {
+        res.status(404).json({ message: "Could not find class with given id" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to update class" });
+    });
+});
+
+// instructor delete
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Classes.remove(id)
+    .then(deleted => {
+      if (deleted) {
+        res.json({ removed: deleted });
+      } else {
+        res
+          .status(404)
+          .json({ message: "Could not find Classes with given id" });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({ message: "Failed to delete Classes" });
+    });
+});
+
+// instructor punches class
+
+// user adds themselves to class by class id
+
+// user removes themselves from class by class id
+
+module.exports = router;

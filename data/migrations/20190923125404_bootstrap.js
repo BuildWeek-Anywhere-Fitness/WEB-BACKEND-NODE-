@@ -13,7 +13,8 @@ exports.up = function(knex) {
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE")
+        .notNullable();
     })
     .createTable("users_classes", tbl => {
       tbl.increments();
@@ -35,4 +36,8 @@ exports.up = function(knex) {
     });
 };
 
-exports.down = function(knex) {};
+exports.down = function(knex) {
+  return knex.schema
+    .dropTableIfExists("users_classes")
+    .dropTableIfExists("classes");
+};
