@@ -1,4 +1,4 @@
-exports.up = function(knex) {
+exports.up = function(knex, Promise) {
   return knex.schema
     .createTable("classes", tbl => {
       tbl.increments();
@@ -36,7 +36,7 @@ exports.up = function(knex) {
     });
 };
 
-exports.down = function(knex) {
+exports.down = function(knex, Promise) {
   return knex.schema
     .dropTableIfExists("users_classes")
     .dropTableIfExists("classes");

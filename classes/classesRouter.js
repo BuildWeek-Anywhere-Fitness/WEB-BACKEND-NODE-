@@ -99,6 +99,8 @@ router.delete("/:id", (req, res) => {
 
 // user adds themselves to class by class id
 
+router.post("/join", (req, res) => {});
+
 // user removes themselves from class by class id
 
 module.exports = router;
