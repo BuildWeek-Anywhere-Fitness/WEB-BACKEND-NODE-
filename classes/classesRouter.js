@@ -136,13 +136,4 @@ router.get("/client/:id", (req, res) => {
     });
 });
 
-// get
-// front end can check .length ||
-// user pass user_id
-// join user_id and class_id make endpoint for get users_classes
-// check to see if sql count
-// find all the classes that have
-
-// have a way for user to see what classes they have signed up for
-
 module.exports = router;
