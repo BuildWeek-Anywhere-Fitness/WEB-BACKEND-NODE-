@@ -95,12 +95,54 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-// instructor punches class
+// user adds themselves to class by class id user removes themselves from class by class id
 
-// user adds themselves to class by class id
+router.post("/join/:id", (req, res) => {
+  const class_id = req.params.id;
+  const user_id = req.body;
 
-router.post("/join", (req, res) => {});
+  Classes.studentsByClass(class_id, user_id)
+    .then(classes => {
+      res.status(201).json(classes);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "client not added" });
+    });
+});
 
-// user removes themselves from class by class id
+router.delete("/drop/:id", (req, res) => {
+  const class_id = req.params.id;
+  const user_id = req.body;
+
+  Classes.removeClient(class_id, user_id)
+    .then(classes => {
+      res.status(200).json(classes);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "client still enrolled in class" });
+    });
+});
+
+router.get("/client/:id", (req, res) => {
+  const id = req.params.id;
+  Classes.studentsByClass(id)
+    .then(classes => {
+      res.status(200).json(classes);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ message: "error getting classes for this client" });
+    });
+});
+
+// get
+// front end can check .length ||
+// user pass user_id
+// join user_id and class_id make endpoint for get users_classes
+// check to see if sql count
+// find all the classes that have
+
+// have a way for user to see what classes they have signed up for
 
 module.exports = router;

@@ -5,7 +5,9 @@ module.exports = {
   findById,
   add,
   update,
-  remove
+  remove,
+  studentsByClass,
+  removeClient
 };
 
 function find() {
@@ -30,4 +32,18 @@ function remove(id) {
   return db("classes")
     .del()
     .where({ id });
+}
+
+function studentsByClass(id) {
+  return db("users_classes")
+    .join("users", "users.id", "user_classes.user_id")
+    .join("classes", "classes.id", "users_classes.class_id")
+    .where({ class_id: id });
+}
+
+function removeClient(id, user_id) {
+  return db("users_classes")
+    .first()
+    .del()
+    .where({ class_id: id, user_id: user_id });
 }

@@ -8,6 +8,11 @@ exports.up = function(knex, Promise) {
       tbl.string("intensity", 128);
       tbl.string("location", 128).notNullable();
       tbl
+        .integer("max_size")
+        .defaultTo(12)
+        .notNullable();
+      tbl.string("starttime");
+      tbl
         .integer("instructor_id")
         .unsigned()
         .references("id")
