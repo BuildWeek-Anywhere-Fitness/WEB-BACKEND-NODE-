@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const secret = require("../config/secrets.js");
 const Users = require("./usersModel.js");
+const restricted = require("../auth/restricted.js");
 
 // get all users
 
@@ -25,13 +26,13 @@ const Users = require("./usersModel.js");
 //     });
 // });
 
-router.get("/", (req, res) => {
+router.get("/", restricted, (req, res) => {
   Users.find()
     .then(users => {
       res.json(users);
     })
     .catch(err => {
-      res.status(500).json({ message: "failed to get users", err });
+      res.status(500).json({ message: "failed to get users" });
     });
 });
 

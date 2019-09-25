@@ -39,6 +39,15 @@ function studentsByClass(id) {
   return db("users_classes")
     .join("users", "users.id", "users_classes.user_id")
     .join("classes", "classes.id", "users_classes.class_id")
+    .select(
+      "users.username",
+      "classes.name",
+      "classes.location",
+      "classes.duration",
+      "classes.intensity",
+      "classes.starttime",
+      "classes.instructor_id"
+    )
     .where({ class_id: id });
 }
 
@@ -57,9 +66,12 @@ function insertUserToCLass(user, id) {
 
 function removeClient(id, user_id) {
   return db("users_classes")
+    .where({ class_id: id, user_id: user_id })
     .first()
     .del()
-    .where({ class_id: id, user_id: user_id });
+    .then(registered => {
+      return studentsByClass(user_id);
+    });
 }
 
 // function getbyID(id) {
