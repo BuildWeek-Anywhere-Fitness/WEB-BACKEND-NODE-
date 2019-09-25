@@ -50,6 +50,7 @@ function studentsByClass(id) {
 // }
 
 function insertUserToCLass(user, id) {
+  console.log("hello test:", user, id);
   return db("users_classes").insert({ class_id: id, user_id: user });
   // .then(([newusers]) => findById(id));
 }

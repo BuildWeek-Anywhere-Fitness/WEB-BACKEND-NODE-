@@ -119,12 +119,6 @@ router.post("/join/:id", (req, res) => {
     });
 });
 
-// router.post('/join', (req, res) => {
-//   const { id } = req.params.id;
-//   const user = req.body;
-
-// })
-
 router.delete("/drop/:id", (req, res) => {
   const id = req.params.id;
   const user_id = req.body;
