@@ -7,7 +7,8 @@ module.exports = {
   update,
   remove,
   studentsByClass,
-  removeClient
+  removeClient,
+  insertUserToCLass
 };
 
 function find() {
@@ -36,9 +37,21 @@ function remove(id) {
 
 function studentsByClass(id) {
   return db("users_classes")
-    .join("users", "users.id", "user_classes.user_id")
+    .join("users", "users.id", "users_classes.user_id")
     .join("classes", "classes.id", "users_classes.class_id")
     .where({ class_id: id });
+}
+
+// function studentsByClass(id) {
+//   return db("users_classes")
+//     .join("users", "users.id", "user_classes.user_id")
+//     .join("classes", "classes.id", "users_classes.class_id")
+//     .where("classes.id", id);
+// }
+
+function insertUserToCLass(user, id) {
+  return db("users_classes").insert({ class_id: id, user_id: user });
+  // .then(([newusers]) => findById(id));
 }
 
 function removeClient(id, user_id) {
@@ -47,3 +60,14 @@ function removeClient(id, user_id) {
     .del()
     .where({ class_id: id, user_id: user_id });
 }
+
+// function getbyID(id) {
+//   return db("users_classes")
+//     .where({ id })
+//     .first()
+//     .then(users => {
+//       return Users.getByOwnerID(id).then(classes => {
+//         return { ...users, classes: classes };
+//       });
+//     });
+// }

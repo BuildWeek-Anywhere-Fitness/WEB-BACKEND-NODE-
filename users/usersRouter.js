@@ -7,21 +7,31 @@ const Users = require("./usersModel.js");
 
 // get all users
 
+// router.get("/", (req, res) => {
+//   Users.find()
+//     .then(response => {
+//       response.map(newClass => {
+//         if (newClass.instructor === 0) {
+//           newClass.instructor = false;
+//         } else {
+//           newClass.instructor = true;
+//         }
+//         return newClass;
+//       });
+//       res.status(200).json(response);
+//     })
+//     .catch(err => {
+//       res.status(500).json(err);
+//     });
+// });
+
 router.get("/", (req, res) => {
   Users.find()
-    .then(response => {
-      response.map(newClass => {
-        if (newClass.instructor === 0) {
-          newClass.instructor = false;
-        } else {
-          newClass.instructor = true;
-        }
-        return newClass;
-      });
-      res.status(200).json(response);
+    .then(users => {
+      res.json(users);
     })
     .catch(err => {
-      res.status(500).json(err);
+      res.status(500).json({ message: "failed to get users", err });
     });
 });
 

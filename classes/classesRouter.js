@@ -98,23 +98,38 @@ router.delete("/:id", (req, res) => {
 // user adds themselves to class by class id user removes themselves from class by class id
 
 router.post("/join/:id", (req, res) => {
-  const class_id = req.params.id;
-  const user_id = req.body;
+  const id = req.params.id;
+  const user = req.body;
 
-  Classes.studentsByClass(class_id, user_id)
+  console.log(id);
+  Classes.studentsByClass(id)
     .then(classes => {
-      res.status(201).json(classes);
+      console.log("test", classes);
+      if (classes) {
+        Classes.insertUserToCLass(user, id).then(users => {
+          res.status(201).json(users);
+          console.log(user);
+        });
+      } else {
+        res.status(404).json({ message: "couldnn't add user to class" });
+      }
     })
     .catch(err => {
-      res.status(500).json({ message: "client not added" });
+      res.status(500).json({ message: "error user not added" });
     });
 });
 
+// router.post('/join', (req, res) => {
+//   const { id } = req.params.id;
+//   const user = req.body;
+
+// })
+
 router.delete("/drop/:id", (req, res) => {
-  const class_id = req.params.id;
+  const id = req.params.id;
   const user_id = req.body;
 
-  Classes.removeClient(class_id, user_id)
+  Classes.removeClient(id, user_id)
     .then(classes => {
       res.status(200).json(classes);
     })
@@ -125,9 +140,14 @@ router.delete("/drop/:id", (req, res) => {
 
 router.get("/client/:id", (req, res) => {
   const id = req.params.id;
+
   Classes.studentsByClass(id)
     .then(classes => {
-      res.status(200).json(classes);
+      if (classes.length >= 1) {
+        res.status(200).json(classes);
+      } else {
+        res.status(404).json({ message: "could not find class for user" });
+      }
     })
     .catch(err => {
       res
