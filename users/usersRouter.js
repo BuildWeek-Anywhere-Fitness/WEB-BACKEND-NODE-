@@ -2,9 +2,9 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const secret = require("../config/secrets.js");
+
 const Users = require("./usersModel.js");
-const restricted = require("../auth/restricted.js");
+
 
 // get all users
 

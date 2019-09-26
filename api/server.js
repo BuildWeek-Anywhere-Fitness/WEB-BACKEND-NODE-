@@ -16,7 +16,7 @@ server.use("/api/users", usersRouter);
 server.use("/api/classes", classRouter);
 
 server.get("/", (req, res) => {
-  res.json({ message: "up up and BUILD WEEK!!!" });
+  res.status(200).json({ message: "up up and BUILD WEEK!!!" });
 });
 
 function logger(req, res, next) {

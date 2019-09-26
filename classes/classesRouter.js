@@ -1,12 +1,13 @@
 const router = require("express").Router();
 
 const restricted = require("../auth/restricted.js");
+const instructoOnly = require('../auth/InstructorOnly.js')
 
 const Classes = require("./classesModel.js");
 
 // get all classes
 
-router.get("/", (req, res) => {
+router.get("/", restricted, (req, res) => {
   Classes.find()
     .then(response => {
       response.map(newClass => {
@@ -26,7 +27,7 @@ router.get("/", (req, res) => {
 
 // get classes by id
 
-router.get("/:id", (req, res) => {
+router.get("/:id", restricted, (req, res) => {
   const { id } = req.params;
 
   Classes.findById(id)
@@ -44,7 +45,7 @@ router.get("/:id", (req, res) => {
 
 // instructor add
 
-router.post("/", (req, res) => {
+router.post("/", restricted, (req, res) => {
   const classData = req.body;
 
   Classes.add(classData)
@@ -57,7 +58,7 @@ router.post("/", (req, res) => {
 });
 
 // instructor change
-router.put("/:id", (req, res) => {
+router.put("/:id", restricted, (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
@@ -77,7 +78,7 @@ router.put("/:id", (req, res) => {
 });
 
 // instructor delete
-router.delete("/:id", (req, res) => {
+router.delete("/:id", restricted, (req, res) => {
   const { id } = req.params;
 
   Classes.remove(id)

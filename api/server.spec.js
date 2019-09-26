@@ -2,6 +2,8 @@ const request = require("supertest");
 
 const server = require("./server.js");
 
+
+
 describe("server.js", () => {
   describe("GET /", () => {
     it("returns 200 OK", () => {
@@ -15,7 +17,7 @@ describe("server.js", () => {
     it("should return { message: 'up up and BUILD WEEK!!!'}", async () => {
       const res = await request(server).get("/");
 
-      expect(res.body.api).toBe("up up and BUILD WEEK!!!");
+      expect(res.body.message).toBe("up up and BUILD WEEK!!!");
       expect(res.body).toEqual({ message: "up up and BUILD WEEK!!!" });
     });
 
