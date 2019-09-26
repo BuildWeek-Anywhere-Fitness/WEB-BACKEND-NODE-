@@ -120,8 +120,9 @@ router.delete("/:id", (req, res) => {
 // });
 
 router.post("/join/:id", async (req, res) => {
-  const class_id = req.params.id;
+  const class_id = Number(req.params.id);
   const user_id = req.body;
+  const classes = { class_id, user_id };
   try {
     await Classes.insertUserToCLass(user_id, class_id);
     res.status(201).json({ message: "yes you did it" });
