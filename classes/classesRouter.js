@@ -118,6 +118,7 @@ router.delete("/:id", (req, res) => {
 //       res.status(500).json({ message: "error user not added" });
 //     });
 // });
+// attempted fix of local vs heroku issue
 
 router.post("/join/:id", async (req, res) => {
   const class_id = parseInt(req.params.id);
