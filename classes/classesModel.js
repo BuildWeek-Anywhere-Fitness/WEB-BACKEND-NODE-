@@ -61,7 +61,7 @@ function studentsByClass(id) {
 async function insertUserToCLass(id) {
   // console.log("hello test:", user, id);
 
-  return db("users_classes").insert(id);
+  return db("users_classes").insert(id, ["id"]);
   // .then(([newusers]) => findById(id));
 }
 
