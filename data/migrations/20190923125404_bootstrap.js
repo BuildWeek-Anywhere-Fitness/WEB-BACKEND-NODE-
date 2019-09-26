@@ -1,4 +1,4 @@
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema
     .createTable("classes", tbl => {
       tbl.increments();
@@ -37,11 +37,11 @@ exports.up = function(knex, Promise) {
         .inTable("classes")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
-      tbl.float("registered");
+
     });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
   return knex.schema
     .dropTableIfExists("users_classes")
     .dropTableIfExists("classes");
