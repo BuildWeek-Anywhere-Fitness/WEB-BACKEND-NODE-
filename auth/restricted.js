@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
       process.env.JWT_SECRET || "another",
       (err, decodedToken) => {
         if (err) {
-          res.status(401).json({ message: "You shall not pass!" });
+          res.status(401).json({ message: "Tyler you need a Token!" });
         } else {
           req.user = { username: decodedToken.username };
           next();

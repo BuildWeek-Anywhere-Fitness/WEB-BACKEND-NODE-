@@ -68,10 +68,7 @@ function removeClient(id, user_id) {
   return db("users_classes")
     .where({ class_id: id, user_id: user_id })
     .first()
-    .del()
-    .then(registered => {
-      return studentsByClass(user_id);
-    });
+    .del();
 }
 
 // function getbyID(id) {
