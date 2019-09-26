@@ -128,7 +128,7 @@ router.post("/join/:id", async (req, res) => {
     await Classes.insertUserToCLass(classes);
     res.status(201).json({ message: "yes you did it" });
   } catch (err) {
-    res.status(500).json({ message: "no no" });
+    res.status(500).json({ message: "no no", err });
   }
 });
 
