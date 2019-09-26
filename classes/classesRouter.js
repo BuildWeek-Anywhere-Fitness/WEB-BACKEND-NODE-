@@ -97,26 +97,37 @@ router.delete("/:id", (req, res) => {
 
 // user adds themselves to class by class id user removes themselves from class by class id
 
-router.post("/join/:id", (req, res) => {
-  const id = req.params.id;
-  const user = req.body;
+// router.post("/join/:id", (req, res) => {
+//   const id = req.params.id;
+//   const user = req.body;
 
-  console.log(id);
-  Classes.studentsByClass(id)
-    .then(classes => {
-      console.log("test", classes);
-      if (classes) {
-        Classes.insertUserToCLass(user, id).then(users => {
-          res.status(201).json(users);
-          console.log(user);
-        });
-      } else {
-        res.status(404).json({ message: "couldnn't add user to class" });
-      }
-    })
-    .catch(err => {
-      res.status(500).json({ message: "error user not added" });
-    });
+//   console.log(id);
+//   Classes.studentsByClass(id)
+//     .then(classes => {
+//       console.log("test", classes);
+//       if (classes) {
+//         Classes.insertUserToCLass(user, id).then(users => {
+//           res.status(201).json(users);
+//           console.log(user);
+//         });
+//       } else {
+//         res.status(404).json({ message: "couldnn't add user to class" });
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).json({ message: "error user not added" });
+//     });
+// });
+
+router.post("/join/:id", async (req, res) => {
+  const class_id = req.params.id;
+  const user_id = req.body;
+  try {
+    await Classes.insertUserToCLass(user_id, class_id);
+    res.status(201).json({ message: "yes you did it" });
+  } catch (err) {
+    res.status(500).json({ message: "no no" });
+  }
 });
 
 router.delete("/drop/:id", (req, res) => {
