@@ -48,7 +48,7 @@ function studentsByClass(id) {
       "classes.starttime",
       "classes.instructor_id"
     )
-    .where({ class_id: id });
+    .where({ user_id: id });
 }
 
 // function studentsByClass(id) {
@@ -60,7 +60,7 @@ function studentsByClass(id) {
 
 function insertUserToCLass(user, id) {
   console.log("hello test:", user, id);
-  return db("users_classes").insert({ class_id: id, user_id: user });
+  return db("users_classes").insert({ class_id: id, user_id: user }, ["id"]);
   // .then(([newusers]) => findById(id));
 }
 
@@ -81,3 +81,7 @@ function removeClient(id, user_id) {
 //       });
 //     });
 // }
+
+// .then(registered => {
+//   return studentsByClass(user_id);
+// });
