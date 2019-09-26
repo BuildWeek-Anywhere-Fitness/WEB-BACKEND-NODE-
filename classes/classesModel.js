@@ -58,9 +58,10 @@ function studentsByClass(id) {
 //     .where("classes.id", id);
 // }
 
-function insertUserToCLass(user, id) {
-  console.log("hello test:", user, id);
-  return db("users_classes").insert({ "class_id": id, "user_id": user, "registered": 1 }, ["id"]);
+async function insertUserToCLass(user, id) {
+  // console.log("hello test:", user, id);
+
+  return db("users_classes").insert({ "class_id": id, "user_id": user, "registered": 1 });
   // .then(([newusers]) => findById(id));
 }
 
