@@ -29,7 +29,11 @@ router.get("/", (req, res) => {
 // router.get("/", (req, res) => {
 //   Users.find()
 //     .then(users => {
-//       res.json(users);
+//       let createdUser = {
+//         ...users,
+//         instructor: users.instructor ? true : false,
+//       }
+//       res.json(createdUser);
 //     })
 //     .catch(err => {
 //       res.status(500).json({ message: "failed to get users" });
@@ -52,7 +56,29 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// register user
+
+// router.get("/:id", (req, res) => {
+//   const { id } = req.params;
+
+//   Users.findById(id)
+//     .then(users => {
+//       if (users) {
+//         let createdUser = {
+//           ...users,
+//           instructor: users.instructor ? true : false,
+//         };
+
+//         res.status(200).json(createdUser);
+//       } else {
+//         res.status(404).json({ message: "couldn't get user by id" });
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).json({ message: "failed to get user by id" });
+//     });
+// });
+
+// register user android pro
 // router.post("/register", (req, res) => {
 //   let user = req.body;
 //   const hash = bcrypt.hashSync(user.password, 10);
@@ -66,6 +92,8 @@ router.get("/:id", (req, res) => {
 //       res.status(500).json(error);
 //     });
 // });
+
+// register for ios
 
 router.post("/register", (req, res) => {
   let user = req.body;

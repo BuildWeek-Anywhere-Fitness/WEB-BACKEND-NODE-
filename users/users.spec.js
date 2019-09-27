@@ -21,5 +21,56 @@ describe('/user', () => {
             });
         });
     });
+    describe("user", () => {
+        describe("POST /api/users/register", () => {
+            it("should return a 201", () => {
+                return request(server)
+                    .post("/api/users/register")
+                    .send({
+                        username: "bill",
+                        password: "ted"
+                    })
+                    .then(res => {
+                        expect(res.status).toBe(201);
+                    });
+            });
+            it("should return a json object", () => {
+                return request(server)
+                    .post("/api/users/register")
+                    .send({
+                        username: "thelma",
+                        password: "louise"
+                    })
+                    .then(res => {
+                        expect(res.type).toBe("application/json");
+                    });
+            });
+        });
+
+        describe("POST /api/auth/login", () => {
+            it("should return a 200 OK status", () => {
+                return request(server)
+                    .post("/api/users/login")
+                    .send({
+                        username: "neo",
+                        password: "matrix"
+                    })
+                    .then(res => {
+                        expect(res.status).toBe(200);
+                    });
+            });
+            it("should return a JSON object", () => {
+                return request(server)
+                    .post("/api/users/login")
+                    .send({
+                        username: "brennan",
+                        password: "dale"
+                    })
+                    .then(res => {
+                        expect(res.type).toMatch(/json/);
+                    });
+            });
+        });
+    });
 
 })
