@@ -65,10 +65,9 @@ async function insertUserToCLass(id) {
   // .then(([newusers]) => findById(id));
 }
 
-function removeClient(id, user_id) {
+function removeClient(class_id, user_id) {
   return db("users_classes")
-    .where({ class_id: id, user_id: user_id })
-    .first()
+    .where({ class_id: class_id, user_id: user_id })
     .del();
 }
 

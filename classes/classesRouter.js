@@ -134,10 +134,10 @@ router.post("/join/:id", async (req, res) => {
 });
 
 router.delete("/drop/:id", (req, res) => {
-  const id = req.params.id;
+  const class_id = req.params.id;
   const user_id = req.body;
 
-  Classes.removeClient(id, user_id)
+  Classes.removeClient(class_id, user_id)
     .then(classes => {
       res.status(200).json(classes);
     })
